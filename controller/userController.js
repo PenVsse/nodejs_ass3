@@ -13,6 +13,12 @@ class userController {
       failureRedirect: "/user/login",
     })(req, res, next);
   }
+  logoutAcount(req, res, next) {
+    req.logout(() => {
+      req.flash("success_msg", "You are logged out!");
+      res.redirect("/orchids");
+    });
+  }
   getRegisterPage(req, res, next) {
     res.render("register/index", {
       title: "Register",
@@ -21,7 +27,7 @@ class userController {
   async createAccount(req, res, next) {
     const { username, password } = req.body;
     if (!username || !password) {
-      req.flash("error_msg", "Please enter all fields");
+      req.flash("error_msg", "Please enter all fields!");
       res.redirect("/user/register");
       return;
     }
@@ -30,12 +36,12 @@ class userController {
     const isValidUsername = patternUsername.test(username);
     const isValidPassword = patternPassword.test(password);
     if (!isValidUsername) {
-      req.flash("error_msg", "Please enter between 1 and 12 characters and do not contain spaces");
+      req.flash("error_msg", "Please enter between 1 and 12 characters and do not contain spaces!");
       res.redirect("/user/register");
       return;
     }
     if (!isValidPassword) {
-      req.flash("error_msg", "Please enter between 6 and 12 characters and do not contain spaces");
+      req.flash("error_msg", "Please enter between 6 and 12 characters and do not contain spaces!");
       res.redirect("/user/register");
       return;
     }

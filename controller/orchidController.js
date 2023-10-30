@@ -5,7 +5,8 @@ const Users = require("../model/user");
 
 class orchidController {
   index(req, res, next) {
-    console.log(req.session.user);
+    console.log(req.user);
+
     Orchid.find({})
       .populate("comments")
       .populate({ path: "category", select: "categoryName" })

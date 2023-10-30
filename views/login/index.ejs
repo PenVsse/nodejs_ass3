@@ -40,7 +40,7 @@
       .notification {
         border-radius: 10px 0px 0px 10px;
         position: fixed;
-        top: 20px;
+        top: 60px;
         right: 0;
         width: fit-content;
         padding: 12px;
@@ -73,16 +73,17 @@
         </div>
       </div>
     </div>
-
+    <!-- noti -->
     <div id="noti">
       <% if(success_msg != ''){ %>
-      <div class="notification" style="background-color: rgba(0, 193, 135, 0.592)"><%= success_msg %></div>
+      <div class="notification" style="background-color: rgb(58 160 255 / 55%)"><%= success_msg %></div>
       <% } %> <% if(error_msg != ''){ %>
       <div class="notification" style="background-color: rgba(255, 0, 0, 0.555)"><%= error_msg %></div>
       <% } %> <% if(error != ''){ %>
       <div class="notification" style="background-color: rgba(255, 0, 0, 0.555)"><%= error %></div>
       <% } %>
     </div>
+    <!-- noti -->
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
