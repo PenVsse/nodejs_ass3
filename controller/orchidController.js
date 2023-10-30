@@ -5,8 +5,6 @@ const Users = require("../model/user");
 
 class orchidController {
   index(req, res, next) {
-    console.log(req.user);
-
     Orchid.find({})
       .populate("comments")
       .populate({ path: "category", select: "categoryName" })
@@ -24,8 +22,6 @@ class orchidController {
       .populate("comments")
       .populate({ path: "category", select: "categoryName" })
       .then((data) => {
-        console.log(data.category.categoryName);
-
         res.render("orchid/detail", {
           title: "Detail of orchid",
           orchidDetail: data,

@@ -10,18 +10,17 @@ module.exports = function (passport) {
         const user = await User.findOne({ username: username });
 
         if (!user) {
-          return done(null, false, { message: "Username không tồn tại" });
+          return done(null, false, { error_msg: "Username does not exist!" });
         }
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
           //login
-          return done(null, user);
+          return done(null, user, { success_msg: "Login successfully!" });
         } else {
-          return done(null, false, { message: "Sai mật khẩu" });
+          return done(null, false, { error_msg: "Wrong password!" });
         }
       } catch (err) {
-        console.log(err);
         return done(null, false, err.message);
       }
     })

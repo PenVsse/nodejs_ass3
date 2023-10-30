@@ -7,23 +7,41 @@ class userController {
       title: "Login",
     });
   }
+
   loginAccount(req, res, next) {
-    passport.authenticate("local", {
-      successRedirect: "/orchids",
-      failureRedirect: "/user/login",
+    // passport.authenticate("local", {
+    //   successRedirect: "/orchids",
+    //   failureRedirect: "/user/login",
+    // })(req, res, next);
+    passport.authenticate("local", (err, user, info) => {
+      if (!user) {
+        req.flash(Object.keys(info), Object.values(info));
+        res.redirect("/user/login");
+        return;
+      }
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        req.flash(Object.keys(info), Object.values(info));
+        return res.redirect("/orchids");
+      });
     })(req, res, next);
   }
+
   logoutAcount(req, res, next) {
     req.logout(() => {
       req.flash("success_msg", "You are logged out!");
       res.redirect("/orchids");
     });
   }
+
   getRegisterPage(req, res, next) {
     res.render("register/index", {
       title: "Register",
     });
   }
+
   async createAccount(req, res, next) {
     const { username, password } = req.body;
     if (!username || !password) {
