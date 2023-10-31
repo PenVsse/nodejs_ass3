@@ -1,5 +1,6 @@
 const passport = require("passport");
 const bcrypt = require("bcrypt");
+const dayjs = require("dayjs");
 const Users = require("../model/user");
 const Categories = require("../model/category");
 const Orchids = require("../model/orchid");
@@ -32,11 +33,18 @@ class categoryController {
       return;
     }
     try {
-      Categories.updateOne({ _id: req.params.id }, updateData).then((data) => {
-        if (data.acknowledged) {
-          req.flash("success_msg", "Update category successfully!");
+      Categories.find({ categoryName: req.body.categoryName.trim() }).then((data) => {
+        if (data.length > 0) {
+          req.flash("error_msg", "Update failed. This category already exists!");
           res.redirect(`/categories/${req.params.id}`);
+          return;
         }
+        Categories.updateOne({ _id: req.params.id }, updateData).then((data) => {
+          if (data.acknowledged) {
+            req.flash("success_msg", "Update category successfully!");
+            res.redirect(`/categories/${req.params.id}`);
+          }
+        });
       });
     } catch (error) {
       console.log(error);

@@ -47,6 +47,12 @@ class orchidController {
       return;
     }
 
+    if (!req.body.category) {
+      req.flash("error_msg", "Create failed. Category can not blank!");
+      res.redirect(`/orchids`);
+      return;
+    }
+
     const orchid = new Orchid(newData);
     orchid
       .save()
