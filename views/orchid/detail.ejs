@@ -223,6 +223,45 @@
                     </div>
                   </div>
                 </form>
+                <!-- <div class="d-flex">
+                  <hr class="my-auto flex-grow-1">
+                  <div class="px-4">Comment</div>
+                  <hr class="my-auto flex-grow-1">
+                </div> -->
+
+                <div style="text-align: left; font-weight: bolder" class="col-12">Comment:</div>
+
+                <% if(orchidDetail?.comments.length> 0){
+                  orchidDetail?.comments.map((item)=>{
+                  %>
+                  <div class="col-12 mt-2">
+                    <div class="card">
+                      <div class="card-body">
+
+                        <img style="vertical-align: middle; width: 30px; height: 30px; border-radius: 50%"
+                          src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                          alt="Avatar" class="avatar" />
+
+                        <span style="font-size: small; color: #00599a; font-weight: bold">
+                          <%= item.author %>
+                        </span>
+                        <span style="position: absolute; right: 20px;">
+                          <% for (let index=0; index < item.rating; index++) { %>
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                            <% } %>
+                        </span>
+
+
+                        <div style="margin-top: 10px">
+                          <%= item.comment %>
+                        </div>
+ 
+                      </div>
+                    </div>
+                  </div>
+                  <% }) }else{
+                    %><i style="margin-top: -2px;">There are no comments yet</i> <%
+                  }%>
 
                 <% } else { %>
                   <div class="col-12">
@@ -238,10 +277,12 @@
                       <div style="text-align: center" class="col-12">Category Name: <%=
                           orchidDetail?.category?.categoryName %>
                       </div>
+                      <div class="d-flex">
+                </div>
                       <div style="text-align: left; font-weight: bolder" class="col-12">Comment:</div>
-
-                      <div class="col-12 mt-2">
-
+           
+                      <% if(orchidDetail?.comments.length <= 0){%>
+                        <div class="col-12 mt-2">
                         <div class="card">
                           <div class="card-body">
                             <form method="POST" action="/orchids/comment/<%= orchidDetail?._id %>">
@@ -273,10 +314,14 @@
                             </form>
                           </div>
                         </div>
-                      </div>
+                      </div><%
+                      } %>
+
+
+
                     </div>
 
-                    <% if(orchidDetail?.comments.length> 0){
+                    <% if( orchidDetail?.comments.length> 0){
                       orchidDetail?.comments.map((item)=>{
                       %>
                       <div class="col-12 mt-2">
@@ -300,9 +345,7 @@
                             <div style="margin-top: 10px">
                               <%= item.comment %>
                             </div>
-                            <div style="margin-top: 10px">
-                              <%= item.rating %>
-                            </div>
+ 
                           </div>
                         </div>
                       </div>

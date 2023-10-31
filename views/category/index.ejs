@@ -153,7 +153,8 @@
                 <td><%= category.categoryName %></td>
                 <td><%= category.updatedAt %></td>
                 <td style="text-align: center">
-                  <a href="/categories/delete/<%= category._id %>"><i class="bi bi-trash-fill" style="color: red"> &ensp; </i> </a>
+                  <!-- href="/categories/delete/<%= category._id %>" -->
+                  <a onclick="return showConfirmModal('<%= category._id %>')"><i class="bi bi-trash-fill" style="color: red"> &ensp; </i> </a>
                   <a href="/categories/<%= category._id %>"><i class="bi bi-pencil-fill" style="color: rgb(3, 110, 75)"></i></a>
                 </td>
               </tr>
@@ -230,7 +231,7 @@
 
           <div class="modal-footer">
             <button data-bs-dismiss="modal" type="button" id="confirmCancel" class="btn btn-outline-dark">Cancel</button>
-            <button type="submit" id="confirmOk" class="btn btn-outline-danger">Delete</button>
+            <button onclick="hanbleDeleteCategory()" id="confirmOk" class="btn btn-outline-danger">Delete</button>
             <!-- data-bs-dismiss="modal" :to close -->
           </div>
         </div>
@@ -276,17 +277,18 @@
         var form = document.getElementById("form_update_orchid");
         form.submit();
       };
-
-      const showConfirmModal = (event, orchidName) => {
+      let categoryIdToDelete;
+      const showConfirmModal = (id) => {
+        categoryIdToDelete = id;
         event.preventDefault();
         var form = event.target;
         var confirmText = document.getElementById("confirmText");
-        confirmText.textContent = `Do you want to delete "${orchidName}" ?`;
+        confirmText.textContent = `Do you want to delete category ?`;
 
-        var confirmOk = document.getElementById("confirmOk");
-        confirmOk.addEventListener("click", function () {
-          form.submit();
-        });
+        // var confirmOk = document.getElementById("confirmOk");
+        // confirmOk.addEventListener("click", function () {
+        //   form.submit();
+        // });
 
         var confirmCancel = document.getElementById("confirmCancel");
         confirmCancel.addEventListener("click", function () {
@@ -298,6 +300,10 @@
         });
 
         document.getElementById("confirmModal").style.display = "block";
+      };
+      const hanbleDeleteCategory = () => {
+        window.location.href = `/categories/delete/${categoryIdToDelete}`;
+        document.getElementById("confirmModal").style.display = "none";
       };
     </script>
   </body>
