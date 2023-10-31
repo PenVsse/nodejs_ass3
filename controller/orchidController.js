@@ -7,7 +7,7 @@ class orchidController {
   index(req, res, next) {
     Categories.find({}).then((category) => {
       Orchid.find({})
-        .populate("comments")
+        .populate({ path: "comments", populate: { path: "author" } })
         .populate("category")
         .sort({ updatedAt: -1 })
         .then((data) => {
@@ -103,7 +103,7 @@ class orchidController {
     try {
       Categories.find({}).then((category) => {
         Orchid.findById({ _id: req.params.id })
-          .populate("comments")
+          .populate({ path: "comments", populate: { path: "author" } })
           .populate("category")
           .then((data) => {
             console.log(data);
