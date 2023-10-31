@@ -11,6 +11,7 @@ const { default: mongoose } = require("mongoose");
 
 var orchidRouter = require("./routes/orchidRouter");
 var userRouter = require("./routes/userRouter");
+var categoryRouter = require("./routes/categoryRouter");
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use(function (req, res, next) {
 });
 app.use("/orchids", orchidRouter);
 app.use("/user", userRouter);
+app.use("/categories", categoryRouter);
 app.use("/home", (req, res) => {
   res.render("home/index");
   return;

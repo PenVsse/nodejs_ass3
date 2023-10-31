@@ -13,4 +13,11 @@ module.exports = {
     req.flash("error_msg", "Only admin can do it!");
     res.redirect("/orchids");
   },
+  userAuthenticated: function (req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin === false) {
+      return next();
+    }
+    req.flash("error_msg", "Only user can do it!");
+    res.redirect("/orchids");
+  },
 };

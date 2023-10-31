@@ -51,6 +51,9 @@
             <li class="nav-item">
               <a class="nav-link active" style="font-weight: bolder; color: #3ba0fd" href="/orchids">Orchids</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/categories">Category</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown </a>
               <ul class="dropdown-menu">
@@ -114,7 +117,6 @@
               <i
                 data-bs-toggle="modal"
                 data-bs-target="#modal_add_orchid"
-                data-orchid-id="000000000000000"
                 class="bi bi-plus-lg"
                 style="font-size: larger; color: #2b70cc"
                 data-bs-toggle="tooltip"
@@ -135,14 +137,18 @@
                 <div class="card-body" style="background-color: #e5f2fe">
                   <h5 class="card-title"><%= orchid.name %></h5>
                   <p class="card-text"><%= orchid.category.categoryName %></p>
-                  <form method="POST" action="/orchids/<%= orchid._id %>?_method=DELETE">
+                  <form
+                    method="POST"
+                    action="/orchids/<%= orchid._id %>?_method=DELETE"
+                    onsubmit="return showConfirmModal(event, '<%= orchid.name %>');"
+                  >
                     <% if(userLogin && userLogin.isAdmin){ %>
-                    <f style="display: flex; text-align: center; gap: 8px">
+                    <div style="display: flex; text-align: center; gap: 8px">
                       <button style="width: 50%" type="submit" class="btn btn-outline-danger"><i class="bi bi-trash">&ensp;</i>Delete</button>
                       <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-outline-success"
                         ><i class="bi bi-info-circle">&ensp;</i>Detail</a
                       >
-                    </f>
+                    </div>
 
                     <% } else { %>
                     <div style="text-align: center">
@@ -164,6 +170,7 @@
         </div>
       </div>
     </div>
+
     <!-- noti -->
     <div id="noti">
       <% if(success_msg != ''){ %>
@@ -240,25 +247,23 @@
     <!-- Modal -->
 
     <!-- Modal Delete -->
-    <div class="modal" id="modal_delete_orchid">
+    <div class="modal" style="background-color: rgba(0, 0, 0, 0.5)" id="confirmModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Delete</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <h4 class="modal-title">Deleted data cannot be recovered !</h4>
+            <button type="button" class="btn-close" id="confirmClose" data-bs-dismiss="modal"></button>
           </div>
 
-          <form method="delete" action="/orchids/6540e3a30c5b097bd5b1aaf3">
-            <div class="modal-body">
-              <div>Deleted data cannot be recovered! Do you want to continue?</div>
-            </div>
+          <div class="modal-body">
+            <div id="confirmText"></div>
+          </div>
 
-            <div class="modal-footer">
-              <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Cancel</button>
-              <button type="submit" class="btn btn-primary">Delete</button>
-              <!-- data-bs-dismiss="modal" :to close -->
-            </div>
-          </form>
+          <div class="modal-footer">
+            <button data-bs-dismiss="modal" type="button" id="confirmCancel" class="btn btn-outline-dark">Cancel</button>
+            <button type="submit" id="confirmOk" class="btn btn-outline-danger">Delete</button>
+            <!-- data-bs-dismiss="modal" :to close -->
+          </div>
         </div>
       </div>
     </div>
@@ -276,6 +281,29 @@
           noti.remove();
         }, 3000);
       });
+
+      const showConfirmModal = (event, orchidName) => {
+        event.preventDefault();
+        var form = event.target;
+        var confirmText = document.getElementById("confirmText");
+        confirmText.textContent = `Do you want to delete "${orchidName}" ?`;
+
+        var confirmOk = document.getElementById("confirmOk");
+        confirmOk.addEventListener("click", function () {
+          form.submit();
+        });
+
+        var confirmCancel = document.getElementById("confirmCancel");
+        confirmCancel.addEventListener("click", function () {
+          document.getElementById("confirmModal").style.display = "none";
+        });
+        var confirmClose = document.getElementById("confirmClose");
+        confirmClose.addEventListener("click", function () {
+          document.getElementById("confirmModal").style.display = "none";
+        });
+
+        document.getElementById("confirmModal").style.display = "block";
+      };
 
       // const handleDelete = (id) => {
       //   if (confirm(`Deleted data cannot be recovered! Do you want to continue?`)) {
