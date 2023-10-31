@@ -153,7 +153,7 @@
                 <td><%= category.categoryName %></td>
                 <td><%= category.updatedAt %></td>
                 <td style="text-align: center">
-                  <!-- <a href="/categories/delete/<%= category._id %>"><i class="bi bi-trash-fill" style="color: red"> &ensp; </i> </a> -->
+                  <a href="/categories/delete/<%= category._id %>"><i class="bi bi-trash-fill" style="color: red"> &ensp; </i> </a>
                   <a href="/categories/<%= category._id %>"><i class="bi bi-pencil-fill" style="color: rgb(3, 110, 75)"></i></a>
                 </td>
               </tr>
@@ -192,7 +192,7 @@
                   <label for="categoryName" class="form-label">Category Name:</label>
                   <input
                     required
-                    pattern="^(?!.*\s$)\S.{1,30}$"
+                    pattern="^(?!.*\s$)\S.{0,30}$"
                     maxlength="30"
                     title="Please enter between 1 and 30 characters and ensure there are no leading or trailing spaces"
                     type="text"

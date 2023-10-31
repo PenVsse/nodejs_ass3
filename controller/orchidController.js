@@ -22,12 +22,31 @@ class orchidController {
   }
   createOrchid(req, res, next) {
     let newData = {
-      name: req.body.name,
-      origin: req.body.origin,
-      image: req.body.image,
+      name: req.body.name.trim(),
+      origin: req.body.origin.trim(),
+      image: req.body.image.trim(),
       isNatural: req.body.isNatural ? true : false,
       category: req.body.category,
     };
+
+    if (!newData.name.trim()) {
+      req.flash("error_msg", "Create failed. Orchid name can not blank!");
+      res.redirect(`/orchids`);
+      return;
+    }
+
+    if (!newData.origin.trim()) {
+      req.flash("error_msg", "Create failed. Origin can not blank!");
+      res.redirect(`/orchids`);
+      return;
+    }
+
+    if (!newData.image.trim()) {
+      req.flash("error_msg", "Create failed. Image url can not blank!");
+      res.redirect(`/orchids`);
+      return;
+    }
+
     const orchid = new Orchid(newData);
     orchid
       .save()

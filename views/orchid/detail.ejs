@@ -98,18 +98,19 @@
               <a class="nav-link" href="/user/manage">Users Manage</a>
             </li>
             <% } %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider" />
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Dropdown </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
         </ul>
 
         <% if (userLogin) { %>
@@ -124,8 +125,8 @@
             </div>
             <ul class="dropdown-menu" style="top: 120%; left: -30%; font-size: small">
               <li>
-                                <a class="dropdown-item" href="/user/<%= userLogin?._id %>"><i class="bi bi-person-gear">&ensp;</i>Account Info</a>
-
+                <a class="dropdown-item" href="/user/<%= userLogin?._id %>"><i
+                    class="bi bi-person-gear">&ensp;</i>Account Info</a>
               </li>
               <li>
                 <hr class="dropdown-divider" />
@@ -262,7 +263,7 @@
                                     <label for="star3" title="text">3 stars</label>
                                     <input type="radio" id="star2" name="rating" value="2" />
                                     <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rating" value="1"  />
+                                    <input type="radio" id="star1" name="rating" value="1" />
                                     <label for="star1" title="text">1 star</label>
                                   </div>
                                 </div>

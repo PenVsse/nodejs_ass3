@@ -203,14 +203,34 @@
                 <div class="col-6">
                   <div class="">
                     <label for="name" class="form-label">Orchid name:</label>
-                    <input required type="text" name="name" class="form-control" id="name" placeholder="Enter orchid name" />
+                    <input
+                      required
+                      pattern="^(?!.*\s$)\S.{0,30}$"
+                      maxlength="30"
+                      title="Please enter between 1 and 30 characters and ensure there are no leading or trailing spaces"
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="name"
+                      placeholder="Enter orchid name"
+                    />
                   </div>
                 </div>
 
                 <div class="col-6">
                   <div class="">
                     <label for="origin" class="form-label">Origin:</label>
-                    <input required type="text" name="origin" class="form-control" id="origin" placeholder="Enter orchid origin" />
+                    <input
+                      required
+                      pattern="^(?!.*\s$)\S.{0,30}$"
+                      maxlength="30"
+                      title="Please enter between 1 and 30 characters and ensure there are no leading or trailing spaces"
+                      type="text"
+                      name="origin"
+                      class="form-control"
+                      id="origin"
+                      placeholder="Enter orchid origin"
+                    />
                   </div>
                 </div>
 
@@ -228,7 +248,17 @@
                 <div class="col-12">
                   <div class="">
                     <label for="image" class="form-label">Image URL:</label>
-                    <input required type="text" name="image" class="form-control" id="image" placeholder="Enter image url" />
+                    <input
+                      required
+                      pattern="^(?!.*\s$)\S.{0,500}$"
+                      maxlength="500"
+                      title="Please enter between 1 and 500 characters and ensure there are no leading or trailing spaces"
+                      type="text"
+                      name="image"
+                      class="form-control"
+                      id="image"
+                      placeholder="Enter image url"
+                    />
                   </div>
                 </div>
 

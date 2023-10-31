@@ -116,7 +116,18 @@
       <div class="card mt-2">
         <div class="card-header" style="background-color: #cfcfcf">
           <div class="row">
-            <div class="col-12" style="text-align: center">
+            <div class="col-3">
+              <a href="/categories" class="col-3" style="text-align: left">
+                <i
+                  class="bi bi-arrow-left"
+                  style="font-size: larger; color: #2b70cc"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Back to orchids page"
+                ></i>
+              </a>
+            </div>
+            <div class="col-6" style="text-align: center">
               <h4 style="color: #0e6fc9; font-weight: bold; margin: auto">Category Detail</h4>
             </div>
           </div>
@@ -128,7 +139,7 @@
               <label for="categoryName" class="form-label">Category Name:</label>
               <input
                 required
-                pattern="^(?!.*\s$)\S.{1,30}$"
+                pattern="^(?!.*\s$)\S.{0,30}$"
                 maxlength="30"
                 title="Please enter between 1 and 30 characters and ensure there are no leading or trailing spaces"
                 type="text"
