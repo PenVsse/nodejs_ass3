@@ -71,7 +71,7 @@
                 src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
                 alt="Avatar"
                 class="avatar"
-              /><%= ' ' + userLogin.username %>
+              /><%= ' ' + userLogin.name %>
             </div>
             <ul class="dropdown-menu" style="top: 120%; left: -30%; font-size: small">
               <li>
@@ -110,18 +110,18 @@
             </div>
             <div class="col-6" style="text-align: center"><h4 style="color: #0e6fc9; font-weight: bold; margin: auto">Orchid List</h4></div>
             <% if(userLogin && userLogin.isAdmin){ %>
-              <div class="col-3" style="text-align: right">
-                <i
-                  data-bs-toggle="modal"
-                  data-bs-target="#modal_add_orchid"
-                  data-orchid-id="000000000000000"
-                  class="bi bi-plus-lg"
-                  style="font-size: larger; color: #2b70cc"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title="Add new orchid"
-                ></i>
-              </div>
+            <div class="col-3" style="text-align: right">
+              <i
+                data-bs-toggle="modal"
+                data-bs-target="#modal_add_orchid"
+                data-orchid-id="000000000000000"
+                class="bi bi-plus-lg"
+                style="font-size: larger; color: #2b70cc"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Add new orchid"
+              ></i>
+            </div>
             <% } %>
           </div>
         </div>
@@ -131,25 +131,27 @@
             <% orchidsData.length >0 && orchidsData.forEach(function(orchid){ %>
             <div class="col-3 p_card">
               <div class="card">
-                <img class="card-img-top" style="height: 200px" src="<%= orchid.image %>" alt=" " />
+                <img class="card-img-top" style="height: 200px" src="<%= orchid.image %>" alt="" />
                 <div class="card-body" style="background-color: #e5f2fe">
                   <h5 class="card-title"><%= orchid.name %></h5>
                   <p class="card-text"><%= orchid.category.categoryName %></p>
-                  <% if(userLogin && userLogin.isAdmin){ %>
-                  <div style="display: flex; text-align: center; gap: 8px">
-                    <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-danger">Delete</a>
-                    <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-primary">Detail</a>
-                  </div>
+                  <form method="POST" action="/orchids/<%= orchid._id %>?_method=DELETE">
+                    <% if(userLogin && userLogin.isAdmin){ %>
+                    <f style="display: flex; text-align: center; gap: 8px">
+                      <button style="width: 50%" type="submit" class="btn btn-outline-danger"><i class="bi bi-trash">&ensp;</i>Delete</button>
+                      <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-outline-success"
+                        ><i class="bi bi-info-circle">&ensp;</i>Detail</a
+                      >
+                    </f>
 
-                  <% } else { %>
-                  <div style="text-align: center">
-                    <button data-bs-toggle="modal" data-bs-target="#modal_delete_orchid" style="width: 50%" type="button" class="btn btn-danger">
-                      Delete
-                    </button>
-
-                    <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-primary">Detail</a>
-                  </div>
-                  <% } %>
+                    <% } else { %>
+                    <div style="text-align: center">
+                      <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-outline-success"
+                        ><i class="bi bi-info-circle">&ensp;</i>Detail</a
+                      >
+                    </div>
+                    <% } %>
+                  </form>
                 </div>
               </div>
             </div>
@@ -239,18 +241,21 @@
 
     <!-- Modal Delete -->
     <div class="modal" id="modal_delete_orchid">
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Add new orchid</h4>
+            <h4 class="modal-title">Delete</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
-          <form method="DELETE">
-            <div class="modal-body"></div>
+          <form method="delete" action="/orchids/6540e3a30c5b097bd5b1aaf3">
+            <div class="modal-body">
+              <div>Deleted data cannot be recovered! Do you want to continue?</div>
+            </div>
 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Ok</button>
+              <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Cancel</button>
+              <button type="submit" class="btn btn-primary">Delete</button>
               <!-- data-bs-dismiss="modal" :to close -->
             </div>
           </form>

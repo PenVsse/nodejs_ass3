@@ -74,6 +74,8 @@ class userController {
       await Users.create({
         username,
         password: hash,
+        name: req.body.name,
+        YOB: Number(req.body.YOB),
       });
       req.flash("success_msg", "Create account successfully!");
       res.redirect("/user/login");

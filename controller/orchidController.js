@@ -39,11 +39,10 @@ class orchidController {
       .catch((error) => {});
   }
   deleteOrchid(req, res, next) {
-    console.log("123");
     Orchid.deleteOne({ _id: req.params.id }).then((data) => {
-      console.log(data);
       if (data.acknowledged) {
-        return;
+        req.flash("success_msg", "Delete orchid successfully!");
+        res.redirect("/orchids");
       }
     });
   }
