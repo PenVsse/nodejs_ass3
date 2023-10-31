@@ -10,14 +10,14 @@ module.exports = {
     if (req.isAuthenticated() && req.user.isAdmin) {
       return next();
     }
-    req.flash("error_msg", "Only admin can do it!");
+    req.flash("error_msg", "Only admin can use this function!");
     res.redirect("/orchids");
   },
   userAuthenticated: function (req, res, next) {
     if (req.isAuthenticated() && req.user.isAdmin === false) {
       return next();
     }
-    req.flash("error_msg", "Only user can do it!");
+    req.flash("error_msg", "Only member can use this function!");
     res.redirect("/orchids");
   },
 };

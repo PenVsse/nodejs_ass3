@@ -93,6 +93,11 @@
           <li class="nav-item">
             <a class="nav-link  " href="/categories">Category</a>
           </li>
+          <% if(userLogin?.isAdmin){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/manage">Users Manage</a>
+            </li>
+            <% } %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown </a>
@@ -119,7 +124,8 @@
             </div>
             <ul class="dropdown-menu" style="top: 120%; left: -30%; font-size: small">
               <li>
-                <a class="dropdown-item" href="#"><i class="bi bi-person-gear">&ensp;</i>Account Info</a>
+                                <a class="dropdown-item" href="/user/<%= userLogin?._id %>"><i class="bi bi-person-gear">&ensp;</i>Account Info</a>
+
               </li>
               <li>
                 <hr class="dropdown-divider" />

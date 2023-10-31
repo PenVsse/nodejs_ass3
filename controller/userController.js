@@ -82,5 +82,51 @@ class userController {
       return;
     });
   }
+
+  accountInfo(req, res, next) {
+    Users.find({ _id: req.params.id }).then((data) => {
+      res.render("userInfo/index", {
+        title: "userInfo",
+        userInfo: data,
+      });
+    });
+  }
+
+  async updateAccountInfo(req, res, next) {
+    try {
+      if (req.body.password && req.body.password.trim() !== "") {
+        bcrypt.hash(req.body.password, 10, async function (err, hash) {
+          let dataUpdate = {
+            password: hash,
+            name: req.body.name,
+            YOB: Number(req.body.YOB),
+          };
+          await Users.updateOne({ _id: req.params.id }, dataUpdate);
+          req.flash("success_msg", "Update account info successfully!");
+          res.redirect(`/user/${req.params.id}`);
+          return;
+        });
+      } else {
+        let dataUpdate = {
+          name: req.body.name,
+          YOB: Number(req.body.YOB),
+        };
+        await Users.updateOne({ _id: req.params.id }, dataUpdate);
+        req.flash("success_msg", "Update account info successfully!");
+        res.redirect(`/user/${req.params.id}`);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  getUsers(req, res, next) {
+    Users.find({}).then((data) => {
+      res.render("admin/userManage", {
+        title: "userManage",
+        usersData: data,
+      });
+    });
+  }
 }
 module.exports = new userController();
