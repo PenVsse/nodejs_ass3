@@ -93,28 +93,69 @@
     </nav>
 
     <div class="container">
-      <div class="card">
-        <div class="card-header">
-          <input type="text" id="p_filter_card" onkeyup="myFunction()" placeholder="Search for card name..." />
+      <div class="card mt-2">
+        <div class="card-header" style="background-color: #cfcfcf">
+          <div class="row">
+            <div class="col-3">
+              <div class="input-group input-group-sm">
+                <input
+                  class="form-control p_search_card"
+                  type="text"
+                  id="p_filter_card"
+                  onkeyup="handleSearch()"
+                  placeholder="Search by orchid name"
+                />
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+              </div>
+            </div>
+            <div class="col-6" style="text-align: center"><h4 style="color: #0e6fc9; font-weight: bold; margin: auto">Orchid List</h4></div>
+            <% if(userLogin && userLogin.isAdmin){ %>
+              <div class="col-3" style="text-align: right">
+                <i
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal_add_orchid"
+                  data-orchid-id="000000000000000"
+                  class="bi bi-plus-lg"
+                  style="font-size: larger; color: #2b70cc"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Add new orchid"
+                ></i>
+              </div>
+            <% } %>
+          </div>
         </div>
+
         <div class="card-body">
           <div class="row g-4" id="p_list_card">
             <% orchidsData.length >0 && orchidsData.forEach(function(orchid){ %>
             <div class="col-3 p_card">
               <div class="card">
-                <img class="card-img-top" style="height: 200px" src="<%= orchid.image %>" alt="<%= orchid.name %>" />
-                <div class="card-body">
+                <img class="card-img-top" style="height: 200px" src="<%= orchid.image %>" alt=" " />
+                <div class="card-body" style="background-color: #e5f2fe">
                   <h5 class="card-title"><%= orchid.name %></h5>
                   <p class="card-text"><%= orchid.category.categoryName %></p>
-                  <div style="text-align: center">
+                  <% if(userLogin && userLogin.isAdmin){ %>
+                  <div style="display: flex; text-align: center; gap: 8px">
+                    <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-danger">Delete</a>
                     <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-primary">Detail</a>
                   </div>
+
+                  <% } else { %>
+                  <div style="text-align: center">
+                    <button data-bs-toggle="modal" data-bs-target="#modal_delete_orchid" style="width: 50%" type="button" class="btn btn-danger">
+                      Delete
+                    </button>
+
+                    <a href="/orchids/<%= orchid._id %>" style="width: 50%" type="button" class="btn btn-primary">Detail</a>
+                  </div>
+                  <% } %>
                 </div>
               </div>
             </div>
             <% }); %>
             <div id="no_data_message" style="display: none; text-align: center">
-              <i class="fas fa-file-excel" style="color: #878787; font-size: 80px"></i>
+              <i class="fas fa-file-excel" style="color: #878787bd; font-size: 80px"></i>
               <div>No data</div>
             </div>
           </div>
@@ -132,6 +173,92 @@
       <% } %>
     </div>
     <!-- noti -->
+
+    <!-- Modal -->
+    <div class="modal" id="modal_add_orchid">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add new orchid</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form method="POST">
+            <div class="modal-body">
+              <div class="row g-4">
+                <div class="col-6">
+                  <div class="">
+                    <label for="name" class="form-label">Orchid name:</label>
+                    <input required type="text" name="name" class="form-control" id="name" placeholder="Enter orchid name" />
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="">
+                    <label for="origin" class="form-label">Origin:</label>
+                    <input required type="text" name="origin" class="form-control" id="origin" placeholder="Enter orchid origin" />
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="">
+                    <label for="category" class="form-label">Category:</label>
+                    <select class="form-select" name="category">
+                      <% categoryData.map((category,index)=>{ %>
+                      <option value="<%= category._id %>"><%= category.categoryName %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="">
+                    <label for="image" class="form-label">Image URL:</label>
+                    <input required type="text" name="image" class="form-control" id="image" placeholder="Enter image url" />
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check">
+                    <input type="checkbox" name="isNatural" class="form-check-input" id="isNatural" />
+                    <label class="form-check-label" for="isNatural">Is Natural</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Create</button>
+              <!-- data-bs-dismiss="modal" :to close -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+
+    <!-- Modal Delete -->
+    <div class="modal" id="modal_delete_orchid">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add new orchid</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form method="DELETE">
+            <div class="modal-body"></div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Ok</button>
+              <!-- data-bs-dismiss="modal" :to close -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Delete -->
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -144,7 +271,29 @@
           noti.remove();
         }, 3000);
       });
-      function myFunction() {
+
+      // const handleDelete = (id) => {
+      //   if (confirm(`Deleted data cannot be recovered! Do you want to continue?`)) {
+      //     let xhr = new XMLHttpRequest();
+      //     xhr.open("DELETE", "/orchids/" + id, false);
+      //     // xhr.onload = function () {
+      //     //   if (xhr.status === 200) {
+      //     //     showMessage("Delete player successfully!", "success");
+      //     //     row.parentNode.removeChild(row);
+      //     //     setTimeout(function () {
+      //     //       hideMessage();
+      //     //     }, 2000);
+      //     //   } else {
+      //     //     console.error("Lỗi:", xhr.status);
+      //     //   }
+      //     // };
+      //     xhr.onerror = function () {
+      //       console.error("Lỗi kết nối");
+      //     };
+      //     xhr.send();
+      //   }
+      // };
+      const handleSearch = () => {
         var input, filter, cards, cardContainer, title, i;
         input = document.getElementById("p_filter_card");
         filter = input.value.toUpperCase();
@@ -167,7 +316,7 @@
         } else {
           noResultMessage.style.display = "none";
         }
-      }
+      };
     </script>
   </body>
 </html>

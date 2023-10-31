@@ -6,6 +6,7 @@ var logger = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const flash = require("connect-flash");
+const methodOverride = require("method-override");
 const { default: mongoose } = require("mongoose");
 
 var orchidRouter = require("./routes/orchidRouter");
@@ -44,6 +45,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 app.use(function (req, res, next) {
   res.locals.userLogin = req.user; // Định nghĩa biến user trong locals

@@ -5,16 +5,47 @@ const Users = require("../model/user");
 
 class orchidController {
   index(req, res, next) {
-    Orchid.find({})
-      .populate("comments")
-      .populate({ path: "category", select: "categoryName" })
-      .then((data) => {
-        res.render("orchid/index", {
-          title: "Orchids",
-          orchidsData: data,
+    Categories.find({}).then((category) => {
+      Orchid.find({})
+        .populate("comments")
+        .populate({ path: "category", select: "categoryName" })
+        .sort({ updatedAt: -1 })
+        .then((data) => {
+          res.render("orchid/index", {
+            title: "Orchids",
+            orchidsData: data,
+            categoryData: category,
+          });
+          return;
         });
+    });
+  }
+  createOrchid(req, res, next) {
+    let newData = {
+      name: req.body.name,
+      origin: req.body.origin,
+      image: req.body.image,
+      isNatural: req.body.isNatural ? true : false,
+      category: req.body.category,
+    };
+    const orchid = new Orchid(newData);
+    orchid
+      .save()
+      .then((data) => {
+        console.log(data);
+        req.flash("success_msg", "Add new orchid successfully!");
+        res.redirect("/orchids");
+      })
+      .catch((error) => {});
+  }
+  deleteOrchid(req, res, next) {
+    console.log("123");
+    Orchid.deleteOne({ _id: req.params.id }).then((data) => {
+      console.log(data);
+      if (data.acknowledged) {
         return;
-      });
+      }
+    });
   }
   detail(req, res, next) {
     const id = req.params.id;
