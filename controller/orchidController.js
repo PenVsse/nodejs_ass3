@@ -57,7 +57,6 @@ class orchidController {
     orchid
       .save()
       .then((data) => {
-        console.log(data);
         req.flash("success_msg", "Add new orchid successfully!");
         res.redirect("/orchids");
       })
@@ -112,7 +111,6 @@ class orchidController {
           .populate({ path: "comments", populate: { path: "author" } })
           .populate("category")
           .then((data) => {
-            console.log(data);
             res.render("orchid/detail", {
               title: "Detail of orchid",
               orchidDetail: data,

@@ -7,6 +7,13 @@ const Orchids = require("../model/orchid");
 class categoryController {
   index(req, res, next) {
     Categories.find({}).then((category) => {
+      let temp = [...category];
+      let cate = temp.map((item) => {
+        item["updatedAt"] = dayjs(item.updatedAt, "YYYY-MM-DD hh:mm:ss").format("DD-MM-YYYY hh:mm");
+        return item;
+      });
+      console.log(cate);
+
       res.render("category/index", {
         title: "categories",
         categoriesData: category,

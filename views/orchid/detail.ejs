@@ -95,7 +95,7 @@
           </li>
           <% if(userLogin?.isAdmin){ %>
             <li class="nav-item">
-              <a class="nav-link" href="/user/manage">Users Manage</a>
+              <a class="nav-link" href="/accounts">Users Manage</a>
             </li>
             <% } %>
               <li class="nav-item dropdown">
@@ -245,6 +245,8 @@
                         <span style="font-size: small; color: #00599a; font-weight: bold">
                           <%= item.author.name %>
                         </span>
+                        <i style="font-size: x-small;"><%= item.updatedAt %></i>
+
                         <span style="position: absolute; right: 20px;">
                           <% for (let index=0; index < item.rating; index++) { %>
                             <i class="bi bi-star-fill" style="color: #ffc107;"></i>
@@ -335,6 +337,7 @@
                             <span style="font-size: small; color: #00599a; font-weight: bold">
                               <%= item.author.name %>
                             </span>
+                            <i style="font-size: x-small;"><%= item.updatedAt %></i>
                             <span style="position: absolute; right: 20px;">
                               <% for (let index=0; index < item.rating; index++) { %>
                                 <i class="bi bi-star-fill" style="color: #ffc107;"></i>
